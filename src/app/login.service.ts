@@ -9,7 +9,7 @@ import { Usuario } from './usuarios/usuario';
 })
 export class LoginService {
 
-  private enderecoApi: string = 'https://gestaodeativos.herokuapp.com//api/login/';
+  private enderecoApi: string = 'https://gestaodeativos.herokuapp.com/api/login/';
 
   constructor( private http: HttpClient) { }
 
