@@ -1,0 +1,222 @@
+<h1 class="mt-4">Itens</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ item.id ? 'Edição' : 'Cadastro' }}</li>
+</ol>
+<div class="container">
+    <form #itemForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success === true">
+                    Item salvo/atualizado com sucesso.
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="item.id">
+                <div class="col-md-3">
+                    <div class="form-group" *ngIf="!item.foto">
+                        <img style="height:auto;" alt="" width="150" height="150"
+                            class="avatar avatar-user width-full border color-bg-default"
+                            src="data:image/png;base64,{{ semImagemBase64 }}">  
+                    </div>
+                    <div await class="form-group" *ngIf="item.foto">
+                        <img style="height:auto;" alt="" width="150" height="150"
+                            class="avatar avatar-user width-full border color-bg-default"
+                            src="data:image/jpg;base64,{{ item.foto }}">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Foto:</label>
+                        <input style="height:auto;" type="file" class="form-control" name="foto" (change)="uploadFoto($event, item)" />
+                    </div>
+                </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3" *ngIf="item.id">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" [ngModel]="item.id" name="id" disabled="true" />
+                </div>
+            </div>
+
+            <div class="col-md-3" *ngIf="item.id">
+
+                <div class="form-group">
+                    <label>Data de Inclusao:</label>
+                    <input type="text" class="form-control" [ngModel]="item.dataDeInclusao" name="dataInclusao"
+                        disabled="true" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Ultima Atualizaco:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.dataDaUltimaAtualizacao"
+                        name="dataDaUltimaAtualizacao" disabled="true"/>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Descrição: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.descricao" name="descricao" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Tombamento: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.numeroTombamento" name="tombamento" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Tombamento Anterior:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.numeroTombamentoAnterior"
+                        name="numeroTombamentoAnterior" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Identificador:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.identificador" name="identificador" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Subgrupo do Item: *</label>
+                    <select class="form-control" [(ngModel)]="item.subgrupoItem" name="subgrupoItem">
+                        <option>Padrão</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Categorias De Itens:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.categoriasDeItens"
+                        name="categoriasDeItens" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Tags:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.tags" name="tags" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                   <label>Centro De Custo: *</label>
+                   <select class="form-control" [(ngModel)]="item.centroDeCusto" name="centroDeCusto">
+                        <option>Secretaria de Saúde</option>
+                        <option>Secretaria de Esporte</option>
+                        <option>Secretaria de Educação</option>
+                        <option>Secretaria de Turismo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Localização: *</label>
+                    <select class="form-control" [(ngModel)]="item.localizacao" name="localizacao">
+                        <option>PSF ZU Silva</option>
+                        <option>Estádio O Marizão</option>
+                        <option>EM Maria Aurita</option>
+                        <option>Vale dos Dinossauros</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Complemento:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.complemento" name="complemento" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Marca Do Equipamento: *</label>
+                        <select class="form-control" [(ngModel)]="item.marcaDoEquipamento" name="marcaDoEquipamento">
+                            <option>Asus</option>
+                        </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Modelo Do Equipamento: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.modeloDoEquipamento"
+                        name="modeloDoEquipamento" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Número De Série: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.numeroDeSerie" name="numeroDeSerie" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Data De Fabricação:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.dataDeFabricacao"
+                        name="dataDeFabricacao" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Medidas:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.medidas" name="medidas" />
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Observações:</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.observacoes" name="observacoes" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Valor Do Bem: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.valorDoBem" name="valorDoBem" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Data de Aquisição: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.dataDeAquisicao"
+                        name="dataDeAquisicao" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Porcentagem Depreciação: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.porcentagemDepreciacao"
+                        name="porcentagemDepreciacao" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Valor Atual Do Bem: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.valorAtualDoBem" name="valorAtualDoBem" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success" *ngIf="!item.id">
+                    <i class="fa fa-save"></i> Salvar
+                </button>
+                <button type="submit" class="btn btn-success" *ngIf="item.id">
+                    <i class="fa fa-sync-alt"></i> Atualizar
+                </button>
+                <button type="button" class="btn btn-danger ml-1" (click)="cancelarCadastro()">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

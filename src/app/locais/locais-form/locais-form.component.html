@@ -1,0 +1,208 @@
+<h1 class="mt-4">Locais</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-local active">{{ local.id ? 'Edição' : 'Cadastro' }}</li>
+</ol>
+<div class="container">
+    <form #localForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                    Local salvo/atualizado com sucesso.
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="local.id">
+            <div class="col-md-3">
+                <div class="form-group" *ngIf="!local.foto">
+                    <img style="height:auto;" alt="" width="150" height="150"
+                        class="avatar avatar-user width-full border color-bg-default"
+                        src="data:image/png;base64,{{ semImagemBase64 }}">
+                </div>
+                <div await class="form-group" *ngIf="local.foto">
+                    <img style="height:auto;" alt="" width="150" height="150"
+                        class="avatar avatar-user width-full border color-bg-default"
+                        src="data:image/jpg;base64,{{ local.foto }}">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Foto:</label>
+                    <input style="height:auto;" type="file" class="form-control" name="foto"
+                        (change)="uploadFoto($event, local)" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-3" *ngIf="local.id">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" [ngModel]="local.id" name="id" disabled="true" />
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="local.id">
+                <div class="form-group">
+                    <label>Data de Inclusao:</label>
+                    <input type="text" class="form-control" [ngModel]="local.dataDeInclusao" name="dataInclusao"
+                        disabled="true" />
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="local.id">
+                <div class="form-group">
+                    <label>Ultima atualização:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.dataDaUltimaAtualizacao"
+                        name="dataDaUltimaAtualizacao" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Descrição: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.descricao" name="descricao" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Razão Social:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.razaoSocial" name="razaoSocial" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Telefone:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.telefone" name="telefone" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Telefone fixo:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.telefoneFixo" name="telefoneFixo" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Email: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.email" name="email" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Observação:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.observacao" name="observacao" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Coordenada GPS:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.coordenadaGps" name="coordenadaGps" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>País: *</label>
+                    <select class="form-control" [(ngModel)]="local.pais" name="pais">
+                        <option>Brasil</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Estado: *</label>
+                    <select class="form-control" [(ngModel)]="local.estado" name="estado">
+                        <option>Acre (AC)</option>
+                        <option>Alagoas (AL)</option>
+                        <option>Amapá (AP)</option>
+                        <option>Amazonas (AM)</option>
+                        <option>Bahia (BA)</option>
+                        <option>Ceará (CE)</option>
+                        <option>Distrito Federal (DF)</option>
+                        <option>Espírito Santo (ES)</option>
+                        <option>Goiás (GO)</option>
+                        <option>Maranhão (MA)</option>
+                        <option>Mato Grosso (MT)</option>
+                        <option>Mato Grosso do Sul (MS)</option>
+                        <option>Minas Gerais (MG)</option>
+                        <option>Pará (PA)</option>
+                        <option>Paraíba (PB)</option>
+                        <option>Paraná (PR)</option>
+                        <option>Pernambuco (PE)</option>
+                        <option>Piauí (PI)</option>
+                        <option>Rio de Janeiro (RJ)</option>
+                        <option>Rio Grande do Norte (RN)</option>
+                        <option>Rio Grande do Sul (RS)</option>
+                        <option>Rondônia (RO)</option>
+                        <option>Roraima (RR)</option>
+                        <option>Santa Catarina (SC)</option>
+                        <option>São Paulo (SP)</option>
+                        <option>Sergipe (SE)</option>
+                        <option>Tocantins (TO)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Município: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.municipio" name="municipio" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Bairro:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.bairro" name="bairro" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Tipo Logradouro:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.tipologradouro" name="tipologradouro" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Logradouro:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.logradouro" name="logradouro" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Número do Logradouro:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.numeroLogradouro"
+                        name="numeroLogradouro" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Complemento Logradouro:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.complementoLogradouro"
+                        name="complementoLogradouro" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>CEP:</label>
+                    <input type="text" class="form-control" [(ngModel)]="local.cep" name="cep" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success" *ngIf="!local.id">
+                    <i class="fa fa-save"></i> Salvar
+                </button>
+                <button type="submit" class="btn btn-success" *ngIf="local.id">
+                    <i class="fa fa-sync-alt"></i> Atualizar
+                </button>
+                <button type="button" class="btn btn-danger ml-1" (click)="cancelarCadastro()">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

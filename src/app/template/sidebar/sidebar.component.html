@@ -1,0 +1,39 @@
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">Sistema</div>
+                <a class="nav-link" routerLink="/home">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Home
+                </a>
+                <div class="sb-sidenav-menu-heading">Consultas</div>
+                <a class="nav-link collapsed" routerLink="/usuarios" data-toggle="collapse"
+                    data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Usuários
+                </a>
+                <a class="nav-link collapsed" routerLink="/itens" data-toggle="collapse"
+                    data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Itens
+                </a>
+                <a class="nav-link collapsed" routerLink="/locais" data-toggle="collapse"
+                    data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Locais
+                </a>
+                <div class="sb-sidenav-menu-heading">Sessão</div>
+                <a class="nav-link" type="button" (click)="sair()"
+                    ><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Sair
+                </a>
+            </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Desenvolvido por:
+                <a href="https://github.com/jbrunosv">@jbrunosv</a>
+            </div>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,80 @@
+<h1 class="mt-4">Usuários</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ usuario.id ? 'Edição' : 'Cadastro' }}</li>
+</ol>
+<div class="container">
+    <form #usuarioForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                    Usuario salvo/atualizado com sucesso.
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3" *ngIf="usuario.id">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" [ngModel]="usuario.id" name="id" disabled="true"/>
+                </div>
+            </div>
+
+            <div class="col-md-3" *ngIf="usuario.id">
+
+                <div class="form-group">
+                    <label>Data de Cadastro:</label>
+                    <input type="text" class="form-control" [ngModel]="usuario.dataDeCadastro" name="dataCadastro" disabled="true"/>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Nome: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="usuario.nomeCompleto" name="nome"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Usuário (Sem espaços): *</label>
+                    <input type="text" class="form-control" [(ngModel)]="usuario.nomeUsuarioLogin" name="nome"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>TIPO DE ACESSO: *</label><select class="form-control" [(ngModel)]="usuario.tipoAcesso" name="tipoAcesso">
+                        <option>Administrador</option>
+                        <option>Leitura e Escrita</option>
+                        <option>Apenas Leitura</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="!usuario.id">
+                <div class="form-group">
+                    <label>Senha: *</label>
+                    <input type="password" class="form-control" [(ngModel)]="usuario.senha" name="senha" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success" *ngIf="!usuario.id">
+                    <i class="fa fa-save"></i> Salvar
+                </button>
+                <button type="submit" class="btn btn-success" *ngIf="usuario.id">
+                    <i class="fa fa-sync-alt"></i> Atualizar
+                </button>
+                <button type="button" class="btn btn-danger ml-1" (click)="cancelarCadastro()">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

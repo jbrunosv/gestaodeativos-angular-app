@@ -1,0 +1,83 @@
+<h1 class="mt-4">Itens</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Consulta</li>
+</ol>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+                {{ mensagemSucesso }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="mensagemErro">
+                {{ mensagemErro }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-primary" (click)="novoCadastro()">
+                <i class="fa fa-plus"></i> Novo
+            </button>
+            <button class="btn btn-primary ml-1" (click)="gerarRelatorio()">
+                <i class="fa fa-print"></i> Gerar relatório
+            </button>
+        </div>
+        <div class="col-md-6" style="text-align: right;">
+            <h5 >Total de {{ itens.length }} itens</h5>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>DESCRICAO</th>
+                        <th>IDENTIFICADOR</th>
+                        <th>CENTRO DE CUSTO</th>
+                        <th>DATA DE INCLUSAO</th>
+                        <th>TOMBO</th>
+                        <th>Ações</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of itens">
+                        <td>{{ item.descricao }}</td>
+                        <td>{{ item.identificador }}</td>
+                        <td>{{ item.centroDeCusto }}</td>
+                        <td>{{ item.dataDeInclusao }}</td>
+                        <td>{{ item.numeroTombamento }}</td>
+                        <td>
+                            <button class="btn btn-primary" routerLink="/itens/form/{{ item.id }}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger ml-1" (click)="preparaDelecao(item)"
+                                    data-toggle="modal" data-target="#modalDelecao">
+                                <i class="fa fa-trash"></i>
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="modalDelecao" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmação</h4>
+                </div>
+                <div class="modal-body" *ngIf="itemSelecionado">
+                    Confirma deleção do item?<br>
+                    <b>Descrição: {{ itemSelecionado.descricao }}, Tombo: {{ itemSelecionado.numeroTombamento}}.</b>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" (click)="deletarItem()" data-dismiss="modal">Sim</button>
+                    <button class="btn btn-danger ml-1" data-dismiss="modal">Não</button>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
