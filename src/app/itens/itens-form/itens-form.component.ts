@@ -152,7 +152,7 @@ export class ItensFormComponent implements OnInit {
     if (this.item.numeroDeSerie === undefined) {
       this.errors.push('É obrigatório informar o Número de Série do Equipamento');
     }
-    if (this.item.dataDeFabricacao === undefined) {
+    if (this.item.dataDeFabricacao === undefined || this.item.dataDeFabricacao === '') {
       this.item.dataDeFabricacao = '';
     } else if (!patternData.test(this.item.dataDeFabricacao)) {
       this.errors.push('A Data de Fabricação é inválida');
