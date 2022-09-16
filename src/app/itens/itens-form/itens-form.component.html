@@ -54,7 +54,7 @@
                         disabled="true" />
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" *ngIf="item.id">
                 <div class="form-group">
                     <label>Ultima Atualizaco:</label>
                     <input type="text" class="form-control" [(ngModel)]="item.dataDaUltimaAtualizacao"
@@ -197,10 +197,10 @@
                         name="porcentagemDepreciacao" />
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" *ngIf="item.id" >
                 <div class="form-group">
                     <label>Valor Atual Do Bem: *</label>
-                    <input type="text" class="form-control" [(ngModel)]="item.valorAtualDoBem" name="valorAtualDoBem" />
+                    <input type="text" class="form-control" [(ngModel)]="item.valorAtualDoBem" name="valorAtualDoBem" disabled="true" />
                 </div>
             </div>
         </div>
