@@ -14,6 +14,7 @@ export class UsuariosListaComponent implements OnInit {
   usuarioSelecionado: Usuario;
   mensagemSucessoDelecao: string;
   mensagemErro: string;
+  usuarioAdministrador: boolean = false;
 
   constructor(
     private service: UsuariosService,
@@ -21,6 +22,11 @@ export class UsuariosListaComponent implements OnInit {
      ) { }
 
   ngOnInit(): void {
+
+    if( !(localStorage.getItem('tipoAcesso') === "Administrador")){
+      this.router.navigate(["/home"]);
+    }
+
     this.service
     .getUsuarios()
     .subscribe( resposta => this.usuarios = resposta);

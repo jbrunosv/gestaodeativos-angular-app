@@ -16,6 +16,7 @@ export class UsuariosFormComponent implements OnInit {
   success: boolean = false;
   errors: string[] = [];
   id: string;
+  usuarioAdministrador: boolean = false;
 
   constructor(
      private service : UsuariosService,
@@ -25,6 +26,10 @@ export class UsuariosFormComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
+    if( !(localStorage.getItem('tipoAcesso') === "Administrador")){
+      this.router.navigate(["/home"]);
+    }
 
     let params: Observable<Params> = this.activatedRoute.params;
     params.subscribe( urlParams => {

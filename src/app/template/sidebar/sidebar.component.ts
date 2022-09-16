@@ -8,12 +8,20 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
+  usuarioAdministrador: boolean = false;
+
   constructor(
     private router: Router
     ) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem('tipoAcesso') === "Administrador"){
+      this.usuarioAdministrador = true;
+    }
   }
+
+  
+
 
   sair(){
     localStorage.clear();
