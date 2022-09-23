@@ -20,6 +20,7 @@ export class LoginComponent {
   ) {
     this.usuario = new Usuario();
     this.retorno = new Usuario();
+    localStorage.setItem('id', "123456");
   }
 
   onSubmit() {

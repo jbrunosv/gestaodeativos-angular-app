@@ -1,122 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ItensService } from 'src/app/itens.service';
-import { Item } from '../item';
-import { jsPDF } from 'jspdf';
-import { ItemSemFoto } from '../itemSemFoto';
+import { Item } from "../item";
 
-@Component({
-  selector: 'app-itens-lista',
-  templateUrl: './itens-lista.component.html',
-  styleUrls: ['./itens-lista.component.css']
-})
-export class ItensListaComponent implements OnInit {
+export class gerarRelatorio{
 
-  itens: Item[] = [];
-  itensPaginados: Item[] = [];
-  mensagemSucesso: string;
-  mensagemErro: string;
-  itemSelecionado: Item;
-
-  totalPages = 0;
-  totalElementos = 0;
-  pagina = 0;
-  tamanho = 10;
-  pageSizeOptions: number[] = [10];
-  voltarPagina: boolean;
-
-  descricao: string = "";
-  centroDeCusto: string = "";
-
-  constructor(
-    private service: ItensService,
-    private router: Router
-  ) { }
-
-  ngOnInit(): void {
-    /*this.service
-      .getItens()
-      .subscribe(resposta => this.itens = resposta);*/
-
-    this.listarItens(this.pagina, this.tamanho);
-    if (this.pagina === 0) {
-      this.voltarPagina = false;
-    }
-  }
-
-  listarItens(pagina = 0, tamanho = 10) {
-    this.service.getItensPaginado(pagina, tamanho)
-      .subscribe(
-        response => {
-          this.totalPages = response.totalPages;
-          this.itensPaginados = response.content;
-          this.totalElementos = response.totalElements;
-          this.pagina = response.number;
-        }
-      )
-  }
-
-  novoCadastro() {
-    this.router.navigate(['/itens/form'])
-  }
-
-  preparaDelecao(item: Item) {
-    this.itemSelecionado = item;
-  }
-
-  deletarItem() {
-    this.service
-      .deletarItemPorId(this.itemSelecionado.id)
-      .subscribe(
-        response => {
-          this.mensagemErro = null;
-          this.mensagemSucesso = 'Item deletado com sucesso!',
-            this.ngOnInit();
-        },
-        erro => {
-          this.mensagemSucesso = null;
-          this.mensagemErro = 'Ocorreu um erro ao deletar Item.'
-        }
-      )
-  }
-
-  proximaPagina() {
-    if ((this.totalPages - 1) > this.pagina) {
-      this.pagina += 1;
-      this.voltarPagina = true;
-      this.ngOnInit();
-    }
-  }
-
-  paginaAnterior() {
-    if (this.pagina > 0) {
-      this.pagina -= 1;
-      this.ngOnInit();
-    }
-  }
-
-  buscaPaginada(pagina = 0, tamanho = 10) {
-    this.service.getBuscaItensPaginado(pagina, tamanho, this.descricao, this.centroDeCusto)
-      .subscribe(
-        response => {
-          this.totalPages = response.totalPages;
-          this.itensPaginados = response.content;
-          this.totalElementos = response.totalElements;
-          this.pagina = response.number;
-        }
-      )
-
-    this.descricao = '';
-    this.centroDeCusto = '';
-  }
-
-  gerarRelatorio() {
-
-    this.service
+   /* this.service
       .getItens()
       .subscribe(
         resposta => {
-          this.itens = resposta
+          const itens = resposta
 
           var pagina: number = 1;
 
@@ -214,8 +104,5 @@ export class ItensListaComponent implements OnInit {
           this.itens = [];
 
         }
-      );
-
-  }
-
+      );*/
 }

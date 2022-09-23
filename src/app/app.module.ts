@@ -17,7 +17,6 @@ import { LocaisService } from './locais.service';
 import { LoginComponent } from './login/login.component';
 import { LayoutComponent } from './layout/layout.component';
 
-import {LOCALE_ID, DEFAULT_CURRENCY_CODE} from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
 
@@ -28,7 +27,7 @@ registerLocaleData(localePt, 'pt');
     AppComponent,
     HomeComponent,
     LoginComponent,
-    LayoutComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,

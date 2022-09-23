@@ -14,7 +14,17 @@ export class UsuariosListaComponent implements OnInit {
   usuarioSelecionado: Usuario;
   mensagemSucessoDelecao: string;
   mensagemErro: string;
-  usuarioAdministrador: boolean = false;
+
+  usuariosPaginados: Usuario[] = [];
+  totalPages = 0;
+  totalElementos = 0;
+  pagina = 0;
+  tamanho = 10;
+  pageSizeOptions: number[] = [10];
+  voltarPagina: boolean;
+
+  nomeCompleto: string;
+  nomeUsuarioLogin: string;
 
   constructor(
     private service: UsuariosService,
@@ -22,14 +32,14 @@ export class UsuariosListaComponent implements OnInit {
      ) { }
 
   ngOnInit(): void {
-
-    if( !(localStorage.getItem('tipoAcesso') === "Administrador")){
-      this.router.navigate(["/home"]);
-    }
-
-    this.service
+    /*this.service
     .getUsuarios()
-    .subscribe( resposta => this.usuarios = resposta);
+    .subscribe( resposta => this.usuarios = resposta);*/
+
+    this.listarUsuarios(this.pagina, this.tamanho);
+    if (this.pagina === 0) {
+      this.voltarPagina = false;
+    }
   }
 
   novoCadastro(){
@@ -50,6 +60,48 @@ export class UsuariosListaComponent implements OnInit {
           },
           erro => this.mensagemErro = 'Ocorreu um erro ao deletar Usuário.'
       )
+  }
+
+  listarUsuarios(pagina = 0, tamanho = 10) {
+    this.service.getUsuariosPaginado(pagina, tamanho)
+      .subscribe(
+        response => {
+          this.totalPages = response.totalPages;
+          this.usuariosPaginados = response.content;
+          this.totalElementos = response.totalElements;
+          this.pagina = response.number;
+        }
+      )
+  }
+
+  proximaPagina() {
+    if ((this.totalPages - 1) > this.pagina) {
+      this.pagina += 1;
+      this.voltarPagina = true;
+      this.ngOnInit();
+    }
+  }
+
+  paginaAnterior() {
+    if (this.pagina > 0) {
+      this.pagina -= 1;
+      this.ngOnInit();
+    }
+  }
+
+  buscaPaginada(pagina = 0, tamanho = 10) {
+    this.service.getBuscaUsuariosPaginado(pagina, tamanho, this.nomeCompleto, this.nomeUsuarioLogin)
+      .subscribe(
+        response => {
+          this.totalPages = response.totalPages;
+          this.usuariosPaginados = response.content;
+          this.totalElementos = response.totalElements;
+          this.pagina = response.number;
+        }
+      )
+
+    this.nomeCompleto = '';
+    this.nomeUsuarioLogin = '';
   }
 
 }

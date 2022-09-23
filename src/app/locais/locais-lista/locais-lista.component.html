@@ -15,12 +15,12 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <button class="btn btn-primary" (click)="novoCadastro()">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalBusca">
+                <i class="fa fa-search"></i> Pesquisar
+            </button>
+            <button class="btn btn-primary ml-1" (click)="novoCadastro()">
                 <i class="fa fa-plus"></i> Novo
             </button>
-        </div>
-        <div class="col-md-6">
-            <h5 style="text-align: right;">Total de {{ locais.length }} locais</h5>
         </div>
     </div>
     <br/>
@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let local of locais">
+                    <tr *ngFor="let local of locaisPaginados">
                         <td>{{ local.descricao }}</td>
                         <td>{{ local.email }}</td>
                         <td>{{ local.razaoSocial }}</td>
@@ -45,7 +45,7 @@
                             <button class="btn btn-primary" routerLink="/locais/form/{{ local.id }}">
                                 <i class="fa fa-edit"></i>
                             </button>
-                            <button class="btn btn-danger" (click)="preparaDelecao(local)"
+                            <button class="btn btn-danger ml-1" (click)="preparaDelecao(local)"
                                     data-toggle="modal" data-target="#modalDelecao">
                                 <i class="fa fa-trash"></i>
                             </button>
@@ -54,6 +54,26 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="row col-md-12">
+                <div class="col-md-4" style="text-align: left;">
+                    <h6>
+                        <b>Mostrando 10 de {{ totalElementos }} itens</b>
+                    </h6>
+                </div>
+                <div class="col-md-4" style="text-align: center; margin-top: 0px; margin-bottom: 10px;">
+                    <button class="btn btn-primary" (click)="paginaAnterior()" ng-disabled="voltarPagina">
+                                <i class="fa fa-angle-left"></i>
+                    </button>
+                    <button class="btn btn-primary ml-1" (click)="proximaPagina()">
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                    <h6>
+                        <b>Página {{ pagina+1 }} de {{ totalPages}}</b>
+                    </h6>
+                </div>
+        </div>
         </div>
     </div>
     <div id="modalDelecao" class="modal fade" role="dialog">
@@ -69,6 +89,27 @@
                 <div class="modal-footer">
                     <button class="btn btn-success" (click)="deletarLocal()" data-dismiss="modal">Sim</button>
                     <button class="btn btn-danger ml-1" data-dismiss="modal">Não</button>
+                </div>                
+            </div>
+        </div>
+    </div>
+    <div id="modalBusca" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Pesquisa</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Descrição: *</label>
+                            <input type="text" class="form-control" [(ngModel)]="descricao" name="descricao"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" (click)="buscaPaginada()" data-dismiss="modal">Pesquisar</button>
+                    <button class="btn btn-danger ml-1" data-dismiss="modal">Cancelar</button>
                 </div>                
             </div>
         </div>

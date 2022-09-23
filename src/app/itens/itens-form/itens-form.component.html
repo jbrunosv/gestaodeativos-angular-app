@@ -3,7 +3,7 @@
     <li class="breadcrumb-item active">{{ item.id ? 'Edição' : 'Cadastro' }}</li>
 </ol>
 <div class="container">
-    <form #itemForm="ngForm" (ngSubmit)="onSubmit()">
+    <form #itemForm="ngForm">
 
         <div class="row">
             <div class="col-md-12">
@@ -17,24 +17,25 @@
         </div>
 
         <div class="row" *ngIf="item.id">
-                <div class="col-md-3">
-                    <div class="form-group" *ngIf="!item.foto">
-                        <img style="height:auto;" alt="" width="150" height="150"
-                            class="avatar avatar-user width-full border color-bg-default"
-                            src="data:image/png;base64,{{ semImagemBase64 }}">  
-                    </div>
-                    <div await class="form-group" *ngIf="item.foto">
-                        <img style="height:auto;" alt="" width="150" height="150"
-                            class="avatar avatar-user width-full border color-bg-default"
-                            src="data:image/jpg;base64,{{ item.foto }}">
-                    </div>
+            <div class="col-md-3">
+                <div class="form-group" *ngIf="!item.foto">
+                    <img style="height:auto;" alt="" width="150" height="150"
+                        class="avatar avatar-user width-full border color-bg-default"
+                        src="data:image/png;base64,{{ semImagemBase64 }}">
                 </div>
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label>Foto:</label>
-                        <input style="height:auto;" type="file" class="form-control" name="foto" (change)="uploadFoto($event, item)" />
-                    </div>
+                <div await class="form-group" *ngIf="item.foto">
+                    <img style="height:auto;" alt="" width="150" height="150"
+                        class="avatar avatar-user width-full border color-bg-default"
+                        src="data:image/jpg;base64,{{ item.foto }}">
                 </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Foto:</label>
+                    <input style="height:auto;" type="file" class="form-control" name="foto"
+                        (change)="uploadFoto($event, item)" />
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -58,7 +59,7 @@
                 <div class="form-group">
                     <label>Ultima Atualizaco:</label>
                     <input type="text" class="form-control" [(ngModel)]="item.dataDaUltimaAtualizacao"
-                        name="dataDaUltimaAtualizacao" disabled="true"/>
+                        name="dataDaUltimaAtualizacao" disabled="true" />
                 </div>
             </div>
 
@@ -110,8 +111,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                   <label>Centro De Custo: *</label>
-                   <select class="form-control" [(ngModel)]="item.centroDeCusto" name="centroDeCusto">
+                    <label>Centro De Custo: *</label>
+                    <select class="form-control" [(ngModel)]="item.centroDeCusto" name="centroDeCusto">
                         <option>Secretaria de Saúde</option>
                         <option>Secretaria de Esporte</option>
                         <option>Secretaria de Educação</option>
@@ -139,9 +140,9 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Marca Do Equipamento: *</label>
-                        <select class="form-control" [(ngModel)]="item.marcaDoEquipamento" name="marcaDoEquipamento">
-                            <option>Asus</option>
-                        </select>
+                    <select class="form-control" [(ngModel)]="item.marcaDoEquipamento" name="marcaDoEquipamento">
+                        <option>Asus</option>
+                    </select>
                 </div>
             </div>
             <div class="col-md-3">
@@ -186,8 +187,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Data de Aquisição: *</label>
-                    <input type="text" class="form-control" [(ngModel)]="item.dataDeAquisicao"
-                        name="dataDeAquisicao" />
+                    <input type="text" class="form-control" [(ngModel)]="item.dataDeAquisicao" name="dataDeAquisicao" />
                 </div>
             </div>
             <div class="col-md-3">
@@ -197,20 +197,21 @@
                         name="porcentagemDepreciacao" />
                 </div>
             </div>
-            <div class="col-md-3" *ngIf="item.id" >
+            <div class="col-md-3" *ngIf="this.id">
                 <div class="form-group">
                     <label>Valor Atual Do Bem: *</label>
-                    <input type="text" class="form-control" [(ngModel)]="item.valorAtualDoBem" name="valorAtualDoBem" disabled="true" />
+                    <input type="text" class="form-control" [(ngModel)]="item.valorAtualDoBem" name="valorAtualDoBem"
+                        disabled="true" />
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
-                <button type="submit" class="btn btn-success" *ngIf="!item.id">
+                <button type="submit" class="btn btn-success" (click)="onSubmit()" *ngIf="!item.id">
                     <i class="fa fa-save"></i> Salvar
                 </button>
-                <button type="submit" class="btn btn-success" *ngIf="item.id">
+                <button type="submit" class="btn btn-success" (click)="onSubmit()" *ngIf="item.id">
                     <i class="fa fa-sync-alt"></i> Atualizar
                 </button>
                 <button type="button" class="btn btn-danger ml-1" (click)="cancelarCadastro()">
@@ -219,4 +220,5 @@
             </div>
         </div>
     </form>
+
 </div>

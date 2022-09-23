@@ -15,15 +15,15 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <button class="btn btn-primary" (click)="novoCadastro()">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalBusca">
+                <i class="fa fa-search"></i> Pesquisar
+            </button>
+            <button class="btn btn-primary ml-1" (click)="novoCadastro()">
                 <i class="fa fa-plus"></i> Novo
             </button>
             <button class="btn btn-primary ml-1" (click)="gerarRelatorio()">
                 <i class="fa fa-print"></i> Gerar relatório
             </button>
-        </div>
-        <div class="col-md-6" style="text-align: right;">
-            <h5 >Total de {{ itens.length }} itens</h5>
         </div>
     </div>
     <br/>
@@ -42,17 +42,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of itens">
-                        <td>{{ item.descricao }}</td>
-                        <td>{{ item.identificador }}</td>
-                        <td>{{ item.centroDeCusto }}</td>
-                        <td>{{ item.dataDeInclusao }}</td>
-                        <td>{{ item.numeroTombamento }}</td>
+                    <tr *ngFor="let itm of itensPaginados">
+                        <td>{{ itm.descricao }}</td>
+                        <td>{{ itm.identificador }}</td>
+                        <td>{{ itm.centroDeCusto }}</td>
+                        <td>{{ itm.dataDeInclusao }}</td>
+                        <td>{{ itm.numeroTombamento }}</td>
                         <td>
-                            <button class="btn btn-primary" routerLink="/itens/form/{{ item.id }}">
+                            <button class="btn btn-primary" routerLink="/itens/form/{{ itm.id }}">
                                 <i class="fa fa-edit"></i>
                             </button>
-                            <button class="btn btn-danger ml-1" (click)="preparaDelecao(item)"
+                            <button class="btn btn-danger ml-1" (click)="preparaDelecao(itm)"
                                     data-toggle="modal" data-target="#modalDelecao">
                                 <i class="fa fa-trash"></i>
                             </button>
@@ -61,6 +61,28 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="row col-md-12">
+                <div class="col-md-4" style="text-align: left;">
+                    <h6>
+                        <b>Mostrando 10 de {{ totalElementos }} itens</b>
+                    </h6>
+                </div>
+                <div class="col-md-4" style="text-align: center; margin-top: 0px; margin-bottom: 10px;">
+                    <button class="btn btn-primary" (click)="paginaAnterior()" ng-disabled="voltarPagina">
+                                <i class="fa fa-angle-left"></i>
+                    </button>
+                    <button class="btn btn-primary ml-1" (click)="proximaPagina()">
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </div>
+                <div class="col-md-4" style="text-align: right;">
+                    <h6>
+                        <b>Página {{ pagina+1 }} de {{ totalPages}}</b>
+                    </h6>
+                </div>
+                
+
+            </div>
         </div>
     </div>
     <div id="modalDelecao" class="modal fade" role="dialog">
@@ -71,11 +93,43 @@
                 </div>
                 <div class="modal-body" *ngIf="itemSelecionado">
                     Confirma deleção do item?<br>
-                    <b>Descrição: {{ itemSelecionado.descricao }}, Tombo: {{ itemSelecionado.numeroTombamento}}.</b>
+                    <b>Descrição: {{ itemSelecionado.descricao }}, Tombo: {{ itemSelecionado.numeroTombamento }}.</b>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-success" (click)="deletarItem()" data-dismiss="modal">Sim</button>
                     <button class="btn btn-danger ml-1" data-dismiss="modal">Não</button>
+                </div>                
+            </div>
+        </div>
+    </div>
+    <div id="modalBusca" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Pesquisa</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Descrição: *</label>
+                            <input type="text" class="form-control" [(ngModel)]="descricao" name="descricao" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Centro De Custo: *</label>
+                            <select class="form-control" [(ngModel)]="centroDeCusto" name="centroDeCusto">
+                                <option>Secretaria de Saúde</option>
+                                <option>Secretaria de Esporte</option>
+                                <option>Secretaria de Educação</option>
+                                <option>Secretaria de Turismo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" (click)="buscaPaginada()" data-dismiss="modal">Pesquisar</button>
+                    <button class="btn btn-danger ml-1" data-dismiss="modal">Cancelar</button>
                 </div>                
             </div>
         </div>

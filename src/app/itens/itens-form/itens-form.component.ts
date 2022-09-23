@@ -185,4 +185,6 @@ export class ItensFormComponent implements OnInit {
 
   }
 
+  //Camera
+
 }

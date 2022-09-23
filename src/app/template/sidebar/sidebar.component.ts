@@ -19,10 +19,6 @@ export class SidebarComponent implements OnInit {
       this.usuarioAdministrador = true;
     }
   }
-
-  
-
-
   sair(){
     localStorage.clear();
     this.router.navigate(['/login']);
